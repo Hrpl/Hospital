@@ -2,5 +2,5 @@
 
 public interface IPatientRepository
 {
-    void Create(Patient p);
+    void CreatePatient(Patient p);
 }

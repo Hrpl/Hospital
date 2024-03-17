@@ -6,4 +6,8 @@ global using System.Threading.Tasks;
 
 global using Hospital.Domain.Models;
 
+global using Hospital.Domain;
+global using Microsoft.Extensions.Logging;
+global using Services.Interfaces;
+
 
