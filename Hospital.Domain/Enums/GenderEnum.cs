@@ -1,4 +1,4 @@
-﻿namespace Hospital.Domain.Enum;
+﻿namespace Hospital.Domain.Enums;
 
 public enum GenderEnum
 {
