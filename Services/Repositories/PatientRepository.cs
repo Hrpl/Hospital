@@ -1,4 +1,4 @@
-﻿namespace Services.Repositories;
+﻿namespace Hospital.Services.Repositories;
 
 public class PatientRepository : IPatientRepository
 {

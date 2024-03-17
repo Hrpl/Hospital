@@ -8,6 +8,6 @@ global using Hospital.Domain.Models;
 
 global using Hospital.Domain;
 global using Microsoft.Extensions.Logging;
-global using Services.Interfaces;
+global using Hospital.Services.Interfaces;
 
 

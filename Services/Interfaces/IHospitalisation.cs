@@ -1,4 +1,4 @@
-﻿namespace Services.Interfaces;
+﻿namespace Hospital.Services.Interfaces;
 
 public interface IHospitalisation
 {
