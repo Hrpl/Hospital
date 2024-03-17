@@ -40,7 +40,7 @@ public class Seed
         return departaments;
     }
 
-    public static IEnumerable<Hospitalization> SeedDataHospitalisation()
+    public static IEnumerable<Hospitalization> GetHospitalisations()
     {
         var faker = new Faker<Hospitalization>()
             .RuleFor(h => h.PatientId, t => t.Random.Number(1, 100))
