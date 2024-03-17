@@ -1,3 +1,5 @@
+using Hospital.Domain;
+using Hospital.Services.Repositories;
 using Hospital.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddScoped<HospitalContext>();
+builder.Services.AddScoped<PatientRepository>();
+builder.Services.AddTransient<Blazor.QrCodeGen.ModuleCreator>();
 
 var app = builder.Build();
 

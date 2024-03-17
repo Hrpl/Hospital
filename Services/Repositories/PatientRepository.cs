@@ -24,4 +24,11 @@ public class PatientRepository : IPatientRepository
             log.LogError($"Ошибка: {ex.InnerException.Message}");
         }
     }
+
+    public IEnumerable<Patient> GetPatients()
+    {
+        var pat = this.db.Patients.ToList();
+
+        return pat;
+    }
 }

@@ -3,4 +3,6 @@
 public interface IPatientRepository
 {
     void CreatePatient(Patient p);
+
+    IEnumerable<Patient> GetPatients();
 }

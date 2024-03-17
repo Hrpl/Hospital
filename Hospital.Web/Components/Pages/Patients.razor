@@ -1,0 +1,73 @@
+﻿@page "/p"
+@using Hospital.Services.Interfaces
+@using Hospital.Services.Repositories
+@using Hospital.Domain.Models;
+
+@rendermode InteractiveServer
+
+@inject PatientRepository repo
+
+<h3>Список пациентов</h3>
+
+<a class="btn btn-primary" href="/sign">Создать пациента</a>
+
+@if (patients == null )
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Серия и номер паспорта</th>
+                <th>Дата рождения</th>
+                <th>Пол</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in patients)
+            {
+                <tr>
+                    <td> <a class="btn btn-primary" href="/p/@patient.Id">@patient.Surname</a>  </td>
+                    <td>@patient.Name</td>
+                    <td>@patient.Patronymic</td>
+                    <td>@patient.PassportSerial @patient.PassportNumber</td>
+                    <td>@patient.Birthday.ToShortDateString()</td>
+                    <td>@patient.Gender</td>
+
+                    <td>
+                        @if (patient.Photo != null)
+                        {
+                            var imageBase64 = Convert.ToBase64String(patient.Photo);
+                            var imageSrc = $"data:image/jpeg;base64,{imageBase64}";
+                            <img src="@imageSrc" alt="Фото пациента" style="width: 100px; height: auto;" />
+                        }
+                        else
+                        {
+                            <h3>Нет изображения</h3>
+                            <img src="/images/f1.png" alt="Фото пациента" style="width: 100px; height: auto;" />
+                        }
+                    </td>
+
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private IEnumerable<Patient>? patients;
+
+    protected override void OnInitialized()
+    {
+        patients = repo.GetPatients();
+    }
+}

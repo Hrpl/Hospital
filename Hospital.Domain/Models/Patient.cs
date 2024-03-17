@@ -20,4 +20,5 @@ public class Patient : Base
     public IEnumerable<Policy>? Policies { get; set; } = null;
     public string Diagnosis { get; set; }
     public string History { get; set; }
+    public byte[]? QrCode { get; set; }
 }

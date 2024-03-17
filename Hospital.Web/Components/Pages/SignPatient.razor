@@ -1,0 +1,76 @@
+﻿@page "/sign"
+@using Hospital.Services.Repositories
+@using Hospital.Domain.Models
+
+@rendermode RenderMode.InteractiveServer
+
+@inject PatientRepository repo
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <EditForm class="m-2 p-2 form-control" Model="@patient" OnSubmit="@Submit">
+
+                <input class="m-2 p-2 input-group" type="text" placeholder="Id" @bind-value="patient.Id" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Фамилия" @bind-value="patient.Surname" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Имя" @bind-value="patient.Name" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Отчество" @bind-value="patient.Patronymic" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Серия паспорта" @bind-value="patient.PassportSerial" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Номер паспорта" @bind-value="patient.PassportNumber" />
+                <input class="m-2 p-2 input-group" type="date" placeholder="Дата рождения" @bind-value="patient.Birthday" />
+
+                <InputSelect class="m-2 p-2 form-select" @bind-Value="patient.Gender">
+
+                    <option value="Male">м</option>
+                    <option value="Female">ж</option>
+
+                </InputSelect>
+
+                <input class="m-2 p-2 input-group" type="text" placeholder="Адрес" @bind-value="patient.Adress" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Место работы" @bind-value="patient.PlaceOfWork" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Телефон" @bind-value="patient.Phone" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Почта" @bind-value="patient.Email" />
+                <input class="m-2 p-2 input-group" type="date" placeholder="Последний визит" @bind-value="patient.LastVisit" />
+                <input class="m-2 p-2 input-group" type="date" placeholder="Следующий визит" @bind-value="patient.NextVisit" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="Диагноз" @bind-value="patient.Diagnosis" />
+                <input class="m-2 p-2 input-group" type="text" placeholder="История болезни" @bind-value="patient.History" />
+
+
+                <InputFile OnChange="OnInputFileChange" />
+
+                <input class="m-2 p-2 btn btn-primary" type="submit" value="Создать" />
+
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    Patient patient = new Patient();
+
+    public void Submit()
+    {
+        repo.CreatePatient(patient);
+    }
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            try
+            {
+                using var memoryStream = new MemoryStream();
+                await file.OpenReadStream(maxAllowedSize: 2083432).CopyToAsync(memoryStream);
+                patient.Photo = memoryStream.ToArray();
+                Console.WriteLine($"Изображение ${file.Name} сохранено!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+            }
+
+        }
+    }
+}
